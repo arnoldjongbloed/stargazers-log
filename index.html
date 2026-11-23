@@ -8,6 +8,22 @@
   <body>
     <h1>Stargazers log</h1>
     <p>A log of the repositories I've starred.</p>
+    
+    <div id="weather-box" class="weather-box">
+      <h2>Tomorrow's Weather in the Netherlands</h2>
+      <div class="weather-input">
+        <input 
+          type="text" 
+          id="town-input" 
+          placeholder="Enter a town in the Netherlands"
+          aria-label="Town name"
+        >
+        <button id="weather-btn">Get Weather</button>
+      </div>
+      <div id="weather-result"></div>
+      <p id="weather-error" role="alert"></p>
+    </div>
+    
     <ul id="starred"></ul>
     <p id="error" role="alert"></p>
     <script src="script.js"></script>
