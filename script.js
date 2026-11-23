@@ -82,6 +82,86 @@ townInput.addEventListener("keypress", (e) => {
   }
 });
 
+// Flower functionality
+const flowerBtn = document.querySelector("#flower-btn");
+const flowerImage = document.querySelector("#flower-image");
+const flowerError = document.querySelector("#flower-error");
+const flowerCredit = document.querySelector("#flower-credit");
+const flowerAuthor = document.querySelector("#flower-author");
+const flowerSource = document.querySelector("#flower-source");
+const flowerLicense = document.querySelector("#flower-license");
+
+const flowers = [
+  {
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Flower_jtca001.jpg/500px-Flower_jtca001.jpg",
+    alt: "Orange gazania flower",
+    author: "Sam Oth",
+    source: "https://commons.wikimedia.org/wiki/File:Flower_jtca001.jpg",
+    license: "CC BY-SA 2.5",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/2.5/",
+  },
+  {
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Tulip_Tulipa_clusiana_%27Lady_Jane%27_Rock_Ledge_Flower_Edit_2000px.jpg/500px-Tulip_Tulipa_clusiana_%27Lady_Jane%27_Rock_Ledge_Flower_Edit_2000px.jpg",
+    alt: "Lady Jane tulip",
+    author: "Derek Ramsey and Chanticleer Garden",
+    source: "https://commons.wikimedia.org/wiki/File:Tulip_Tulipa_clusiana_%27Lady_Jane%27_Rock_Ledge_Flower_Edit_2000px.jpg",
+    license: "CC BY-SA 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+  },
+  {
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Halictus_bee_on_flower-2.jpg/500px-Halictus_bee_on_flower-2.jpg",
+    alt: "Bee on an orange flower",
+    author: "Alvesgaspar",
+    source: "https://commons.wikimedia.org/wiki/File:Halictus_bee_on_flower-2.jpg",
+    license: "CC BY 2.5",
+    licenseUrl: "https://creativecommons.org/licenses/by/2.5/",
+  },
+  {
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Hoverfly_on_flower_edit.jpg/500px-Hoverfly_on_flower_edit.jpg",
+    alt: "Hoverfly on a yellow flower",
+    author: "Alvesgaspar",
+    source: "https://commons.wikimedia.org/wiki/File:Hoverfly_on_flower_edit.jpg",
+    license: "CC BY 2.5",
+    licenseUrl: "https://creativecommons.org/licenses/by/2.5/",
+  },
+];
+let lastFlowerIndex = -1;
+
+function getRandomFlower() {
+  let index = Math.floor(Math.random() * (flowers.length - (lastFlowerIndex < 0 ? 0 : 1)));
+  if (lastFlowerIndex >= 0 && index >= lastFlowerIndex) {
+    index++;
+  }
+  const flower = flowers[index];
+  lastFlowerIndex = index;
+  flowerError.textContent = "";
+  flowerImage.hidden = true;
+  flowerCredit.hidden = true;
+  flowerBtn.disabled = true;
+
+  flowerImage.onload = () => {
+    flowerImage.hidden = false;
+    flowerAuthor.textContent = flower.author;
+    flowerSource.href = flower.source;
+    flowerLicense.href = flower.licenseUrl;
+    flowerLicense.textContent = flower.license;
+    flowerCredit.hidden = false;
+    flowerBtn.disabled = false;
+  };
+  flowerImage.onerror = () => {
+    console.error("Could not load flower image:", flower.image);
+    flowerError.textContent = "Could not load flower image. Please try again.";
+    flowerBtn.disabled = false;
+  };
+  flowerImage.alt = flower.alt;
+  flowerImage.src = flower.image;
+}
+
+flowerBtn.addEventListener("click", getRandomFlower);
+
+// Load an initial flower on page load
+window.addEventListener("load", getRandomFlower);
+
 // WMO Weather interpretation codes
 function getWeatherDescription(code) {
   const weatherCodes = {
